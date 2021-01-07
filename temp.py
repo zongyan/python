@@ -8,7 +8,7 @@ https://www.runoob.com/python3/python3-tutorial.html
 """
 # hello, world
 print("hello, world!")
-
+print("=================Basic Syntax==========================")
 if True:
     print("Answer")
     print("true")
@@ -61,3 +61,18 @@ for i in sys.argv:
     print (i)
 print(sys.argv)
 print("sys.argv")
+print("=================Data Type==========================")
+m=1
+print(m, end="")
+m=2
+print(m, end="")
+counter=100
+miles=100.0
+name="zongyan"
+print(counter)
+print(miles)
+print(name)
+a,b,c=1,2,"zongyan"
+print(a,b,c)
+a, b, c, d = 20, 5.5, True, 4+3j
+print(type(a), type(b), type(c), type(d))

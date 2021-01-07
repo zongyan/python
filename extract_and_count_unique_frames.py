@@ -2,8 +2,6 @@
 This is a python script to extract and count the set of unique
 telemetry frames from an ascii file and create a
 file with the list of unique frames.
-  
-@author Nicholas St. Hill <nicholas.sthill@keiky.com>
 """
 import os
 from pathlib import Path

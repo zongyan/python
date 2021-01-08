@@ -1,3 +1,0 @@
-"""
-VHDL Utility package
-"""

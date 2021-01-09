@@ -264,11 +264,18 @@ if x or y and z:
 else:
     print("no")
     
-    
-    
-    
-    
-    
+print("=================Number==========================")    
+print(0xA0F)
+print(complex(1.11, 2.2))
+#注意这三点的区别，//并不一定返回的总是int，也是可能是浮点型的
+print(7//2);print(7//2.0);print(7.0//2); 
+
+tax = 12.5 / 100
+price = 100.50
+price * tax
+price + _   """这里注意这个_的用法，这个就是表示，用户所见到的那个数，
+            比如说就是现在console上面的那个数据
+            """
     
     
     

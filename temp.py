@@ -116,6 +116,7 @@ def reverseWords(input):
     output = ' '.join(inputWords)
     return output
 
+# https://www.cnblogs.com/shuopython/p/11922641.html
 if __name__ == "__main__":
     inputs = "Yan like YuXin"
     rw = reverseWords(inputs)
@@ -273,9 +274,22 @@ print(7//2);print(7//2.0);print(7.0//2);
 tax = 12.5 / 100
 price = 100.50
 price * tax
-price + _   """这里注意这个_的用法，这个就是表示，用户所见到的那个数，
-            比如说就是现在console上面的那个数据
-            """
-    
-    
-    
+# price + _ # 这个_很奇怪，在台式机上面就是可以正常的运行的了，但是呢，在这个
+            # surface pro上就是没有办法运行的了，这个是一个很奇怪的现象。
+"""
+这里注意这个_的用法，这个就是表示，用户所见到的那个数，
+比如说就是现在console上面的那个数据
+"""
+
+abs(-10) #数字的绝对值
+# ceil(10.2) # 向上去整数，就是11
+# 很奇怪，就是在surface上面没有办法识别这个函数            
+# exp(1)
+# log(100, 1)    
+# 这一些的函数都是没有办法识别出来的了，ToDo：我的理解就是需要库的支持
+"""    
+https://www.runoob.com/python3/python3-number.html
+上面这个链接中的，数学函数，随机数函数，三角函数&数学常量都是没有办法在
+surface中成功运行的了，我的理解并不是IDE的问题，而是需要相应的库支持
+ToDo    
+"""

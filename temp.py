@@ -293,3 +293,25 @@ https://www.runoob.com/python3/python3-number.html
 surface中成功运行的了，我的理解并不是IDE的问题，而是需要相应的库支持
 ToDo    
 """
+
+print("=================Python3 String==========================")
+var1 = 'Hello World!'
+#这个和C语言中的print的使用方式还是非常的类似的了。
+#https://www.runoob.com/python3/python3-string.html 中就是有各种不同符号数据格式的
+#解释
+print ("我叫 %s 今年 %d 岁!" % ('小明', 10))
+name = "Runoob"
+print('hello %s' % name)
+# 上面的这个是旧版本的打印形式，下面的这个是python 3.6之后引入的新的方式，两者通用
+# f-string， { }里面是代表变量的意思
+name="Runoob"
+print(f"hello, {name}")
+print(f"{1+2}")
+w={"name": "Runoob", "url":"www.runoob.com"}
+print(f"{w['name']}: {w['url']}")
+print(f'{w["name"]}: {w["url"]}')
+# print(f"{w["name"]}: {w["url"]}") 这一个就是运行不起来，主要的原因还是在于变量
+#name & url应该是使用单引号，而不能够使用双引号，这个倒是非常有意思的呢
+#也就是说，在一行代码中，不能够同时使用两次双引号
+
+# toDo: 我还是不明白  “Python 的字符串内建函数” 是什么意思

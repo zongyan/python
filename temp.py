@@ -336,3 +336,28 @@ print(len(llist))#打印出列表的长度
 重中之重的了。
 """
 
+print("=================Python3 Tuple==========================")
+"""
+元组与列表类似，不同之处在于元组的元素不能修改。
+元组使用小括号 ( )，列表使用方括号 [ ]。
+"""
+
+print("=================Python3 Dictionary==========================")
+dictt={"Name":"Runoob", "Age":'7', "Class":"First"}
+print(dictt)
+dictt["Age"] = 8 # 修改字典中的value的内容
+dictt["Class"] = "Second" # 修改字典中的value的内容
+print("ductt['Age']", dictt["Age"])
+print("ductt['Classs']", dictt["Class"])
+
+del dictt["Name"] # 删除Name对应的这个数值
+print(dictt)
+dictt.clear() # 清空字典，意思是说，删除字典中所有的数值了。
+print(dictt)
+del dictt     # 删除字典，意思就是说这个dictt这个字典变量了。
+# print(dictt)
+
+dictt={"Name": "Runoob", "Age": "7", "Name": "小菜鸟"}
+print(f"dictt['Name']: {dictt['Name']}")
+# 上面的这个例子就是说明了，如果字典中出现了两次Name，那么第二次的数值就是会
+# 对第一次进行覆盖的了。

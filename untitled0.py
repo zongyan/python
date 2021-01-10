@@ -165,3 +165,33 @@ while var > 0:
 #  pass是空语句，是为了保持程序结构的完整性。
 while True:
     pass
+
+print('================Iterator generator============')
+print("https://www.runoob.com/python3/python3-iterator-generator.html")
+print('================Iterator generator============')
+llist=[1, 2, 3, 4]
+it = iter(llist)
+print(next(it))
+print(next(it))
+
+llist=[1, 2, 3, 4]
+it = iter(llist)
+for x in it:
+    print(x, end=",")
+    
+# 下面的这个案例，我暂时还是没有办法理解，因为使用的高端的东西还是太多了。
+import sys
+llist=[1, 2, 3, 4]
+it = iter(llist)
+while True:
+    try: 
+        print(next(it))
+    except StopIteration:
+        sys.exit()
+
+# 也是过了几个迭代器&生成器的例子，但是还是不明白这个iter() & next() 的价值
+# 换句话说，我还是不太明白这个是使用在哪里的了。
+
+
+
+

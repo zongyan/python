@@ -361,3 +361,28 @@ dictt={"Name": "Runoob", "Age": "7", "Name": "小菜鸟"}
 print(f"dictt['Name']: {dictt['Name']}")
 # 上面的这个例子就是说明了，如果字典中出现了两次Name，那么第二次的数值就是会
 # 对第一次进行覆盖的了。
+
+print("=================Python3 Set==========================")
+a = {x for x in "abracadabra" if x not in "abc"}
+print(f"{a}") 
+
+Thisset = {"Google", "Baidu", "Tencent"}
+Thisset.add("Facebook") # 向Thisset添加一个变量
+print(Thisset)
+Thisset.update("{Apple}", "{TaoBao}") # 这个和上面add的区别的区别就是在于
+                    # add可以增加一个字符串，但是这个就是不会增加一个字符串，而是
+                    # 会把每一个字符串改编成一个个的character的形式的了。
+print(Thisset)
+Thisset.remove("Google") # 移除一个string
+print(Thisset)
+Thisset.discard("Google") # 这个和remove的区别就是在于 如果某一个element不存在的话
+                    # remove就是会报错，但是呢，使用discard就是不会报错
+                    
+thisset = set(("Google", "Runoob", "Taobao", "Facebook"))
+x = thisset.pop()
+m = thisset.pop() # pop是随机的选取一个数出来
+print(x,m)
+
+thisset = set(("Google", "Runoob", "Taobao"))
+thisset.clear() # 清空集合
+print(thisset)

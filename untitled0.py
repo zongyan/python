@@ -381,6 +381,45 @@ class MyNumbers:
 myclasss = MyNumbers()
 myiters = iter(myclasss)
 
-for x in myiter:
+for x in myiters:
   print(x)
-        
+  
+print('================Function============')
+print("https://www.runoob.com/python3/python3-function.html")
+print('================Function============')  
+# 不定长参数, 这个是之前从来没有遇到过的
+def printinfo(arg1, *vartuple):
+    "打印任何传入的数据"
+    print("输出：")
+    print(arg1)
+    print(vartuple)
+    
+printinfo(10), #如果就是没有对这个元素进行赋值，那么就是一个空的元组
+printinfo( 70, 60, 50 )
+
+# 可写函数说明
+def printinfo( arg1, **vardict ):
+   "打印任何传入的参数"
+   print ("输出: ")
+   print (arg1)
+   print (vardict)
+ 
+# 调用printinfo 函数
+printinfo(1, a=2,b=3)
+
+# 这里就是需要备注说明一下，*代表的是元组tuple，**代表的是字典dictionary，这个还是
+# 有所区别的了。
+
+#匿名函数, 用lambda来表示声明
+summ = lambda arg1, arg2: arg1 + arg2
+
+print("相加后的值为 :", summ(10,20))
+print("相加后的值为 : ", summ( 20, 20 ))
+
+# 在以下的例子中，形参 a 和 b 必须使用指定位置参数，c 或 d 
+# 可以是位置形参或关键字形参，而 e 或 f 要求为关键字形参:
+def f(a, b, /, c, d, *, e, f):
+    print(a, b, c, d, e, f)
+    
+f(10, 20, 30, d=40, e=50, f=60)
+# 暂时就是先是放在这里，我也不知道后面是不是会用到，这个太复杂了。

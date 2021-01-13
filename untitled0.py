@@ -423,3 +423,61 @@ def f(a, b, /, c, d, *, e, f):
     
 f(10, 20, 30, d=40, e=50, f=60)
 # 暂时就是先是放在这里，我也不知道后面是不是会用到，这个太复杂了。
+
+print('================Data structure============')
+print("https://www.runoob.com/python3/python3-data-structure.html")
+print('================Data structure============')  
+a = [66.25, 333, 333, 1, 1234.5]
+print(a.count(333), a.count(66.25), a.count('x'))
+# 计数()中相应数的个数
+a.insert(2, -1) # 在a[2]位置插入-1
+a.append(333) #在最后插入333
+print(a)
+print(a.index(333)) # 打印出第一个333的index
+a.remove(333) #删除第一个333
+print(a)
+a.reverse() #倒序排列
+print(a)
+a.sort() #从小到达重新排列
+print(a)
+
+#列表当作堆栈使用，即后进先出
+stack = [3, 4, 5]
+print(stack)
+stack.append(6)
+stack.append(7)
+print(stack.pop())
+print(stack)
+print(stack.pop())
+print(stack)
+
+#列表当作队列使用，即FIFO
+from collections import deque
+queue = deque(["Eric", "John", "Michael"])
+queue.append("Terry") 
+queue.append("Graham")          # Graham arrives
+queue.popleft() # 需要区分这个popleft和pop的区别，
+queue.popleft() 
+queue
+
+# 列表推导式
+vec = [2, 4, 6]
+[3*x for x in vec]
+[[x, x**2] for x in vec]
+
+freshfruit = ['  banana', '  loganberry ', 'passion fruit  ']
+[weapon.strip() for weapon in freshfruit] # trip() 方法用于移除字符串头尾指定的字符
+
+# 以上是在列表中使用for，下面的内容是在列表中使用if
+
+[x*x for x in vec if x > 3] # 只有满足x>3的的元素才是可以执行
+[x*x for x in vec if x < 2] # 只有满足x<2的的元素才是可以执行
+
+vec1 = [2, 4, 6]
+vec2 = [4, 3, -9]
+[x*y for x in vec1 for y in vec2]
+[x+y for x in vec1 for y in vec2]
+[vec1[i]*vec2[i] for i in range(len(vec1))]
+# 注意上面三个的区别，这个一个非常重要的特性了。
+
+[str(round(355/113, i)) for i in range(1, 6)]

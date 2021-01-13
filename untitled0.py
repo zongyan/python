@@ -192,6 +192,195 @@ while True:
 # 也是过了几个迭代器&生成器的例子，但是还是不明白这个iter() & next() 的价值
 # 换句话说，我还是不太明白这个是使用在哪里的了。
 
+"""
+下面这部分的内容，也是研究这个迭代器&生成器的内容，只不过是从其他的地方找到的，主要
+想着是用来理解这个两个概念的了。
+"""
+# https://blog.csdn.net/weixin_37589575/article/details/104973844
+# 这个链接里面的内容非常的好，讲解的非常的详细，收益非常。但是因为我是刚刚学python，
+# 就是只是看到section 3为止，后面的几个，就是仅仅是看了结论而已了。
+# 可迭代对象：
+from collections import Iterable
+l1 = [1, 2, 3] # list 
+t1 = (1, 2, 3) # tuple
+d1 = {"kei1":"Value1"} # dictionary
+str1="string1" # string
+s1 = {'a', 'b', 'c'} # set
+
+isinstance(l1, Iterable)
+isinstance(t1, Iterable)
+isinstance(d1, Iterable)
+isinstance(str1, Iterable)
+isinstance(s1, Iterable)
+
+class MyObject:
+    def __init__(self):
+        pass
+    
+class MyIter:
+    def __init__(self):
+        pass
+    def __iter__(self):
+        yield 1
+        
+a=MyObject()
+b=MyIter()
+isinstance(a, Iterable)
+isinstance(b, Iterable)
+
+# 迭代器
+from collections import Iterable
+from collections import Iterator
+
+l1 = [1, 2, 3] # list 
+t1 = (1, 2, 3) # tuple
+d1 = {"kei1":"Value1"} # dictionary
+str1="string1" # string
+s1 = {'a', 'b', 'c'} # set
+
+isinstance(l1, Iterable)
+isinstance(t1, Iterable)
+isinstance(d1, Iterable)
+isinstance(str1, Iterable)
+isinstance(s1, Iterable)
+
+class MyObject:
+    def __init__(self):
+        pass
+    
+class MyIter:
+    def __init__(self):
+        pass
+    def __iter__(self):
+        yield 1
+
+class MyIterator:
+    def __init__(self):
+        pass
+    def __iter__(self):
+        yield 1
+    def __next__(self):
+        return self
+    
+a=MyObject()
+b=MyIter()
+c=MyIterator()
+
+print(isinstance(l1, Iterable))
+print(isinstance(t1, Iterable))
+print(isinstance(d1, Iterable))
+print(isinstance(str1, Iterable))
+print(isinstance(s1, Iterable))
+print(isinstance(a, Iterable))
+print(isinstance(c, Iterable))
+
+print(isinstance(l1, Iterator))
+print(isinstance(t1, Iterator))
+print(isinstance(d1, Iterator))
+print(isinstance(str1, Iterator))
+print(isinstance(s1, Iterator))
+print(isinstance(a, Iterator))
+print(isinstance(c, Iterator))
+
+l2=iter(l1)
+t2=iter(t1)
+d2=iter(d1)
+str2=iter(str1)
+s2=iter(s1)
+print(isinstance(l2, Iterator))
+print(isinstance(t2, Iterator))
+print(isinstance(d2, Iterator))
+print(isinstance(str2, Iterator))
+print(isinstance(s2, Iterator))
+
+# 生成器
+def fib(n):
+    i, a, b= 0, 0, 1
+    while i < n:
+        yield b # yield关键字的作用，就是把一个普通的函数变成
+                # 生成器。当一个函数内出现yield关键字后，就会变
+                # 异为生成器，其行为与普通函数不同。
+        a, b = b, a + b
+        i = i + 1
+        
+g1 = (x * x for x in range(1, 11))
+g2 = fib(6)
+
+print(isinstance(g1, Iterator))
+print(isinstance(g2, Iterator))
+for i in range(10):
+    print(next(g1))
+for i in range(6):
+    print(next(g2))   
+    
+"""
+从动态的角度，生成器在运行过程中：
+
+当生成器函数被调用的时候，生成器函数不执行内部的任何代码，直接立即返回一个迭代器。
+当所返回的迭代器第一次调用 next 的时候，生成器函数从头开始执行，如果遇到了执行 yield x，next立即返回 yield 的值 x。
+当所返回的迭代器继续调用next的时候，生成器函数从上次yield语句的下一句开始执行，直到遇到下一次执行yield。
+任何时候遇到函数结尾，或者 return 语句，抛出 StopIteration 异常。
+"""    
+
+def g():
+    print('L1')
+    yield 1
+    print('L2')
+    yield 2
+    print('L3')
+    yield 3
+    print('L4')
 
 
+it = iter(g())
+print('............')
+v = next(it)
+print(v)
+v = next(it)
+print(v)
+v = next(it)
+print(v)
+v = next(it)
+print(v)     
 
+"""
+下面的内容，又是来自于runoob.com的网站上了。
+"""
+class MyNumber:
+    def __iter__(self):
+        self.a = 1
+        return self
+    
+    def __next__(self):
+        x = self.a
+        self.a += 1
+        return x
+    
+myclass = MyNumber()
+myiter = iter(myclass)
+
+print(next(myiter))
+print(next(myiter))
+print(next(myiter))
+print(next(myiter))
+print(next(myiter))
+
+
+class MyNumbers:
+    def __iter__(self):
+        self.a = 1
+        return self
+    
+    def __next__(self):
+        if self.a <= 20:            
+            x = self.a
+            self.a += 1
+            return x
+        else:
+            raise StopIteration
+myclasss = MyNumbers()
+myiters = iter(myclasss)
+
+for x in myiter:
+  print(x)
+        

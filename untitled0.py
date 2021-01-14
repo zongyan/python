@@ -559,8 +559,8 @@ print("\n\nPython 路径为：", sys.path, "\n")
  
 # 这个功能还是很重要的，但是关于怎么创建一个module，然后import，这个就是需要
 # 在后期的过程中再研究一下的   
-#import support
-#support.print_func("Yan")
+import support
+support.print_func("Yan")
 
 import fib
 print(fib.fib(1000))
@@ -571,3 +571,18 @@ print(fib.fib2(10))
 # 但是诡异的是，我没有办法成功的导入support
 # 后来我就是把这个另外一个module fib放到了C:\\ProgramData\\Anaconda3，其实这两个都是
 # 在当前的path下面，这个就是一件非常诡异的事情了。
+
+# 这里就是需要修改一下，如果只是单纯的用F9执行相应行的代码，就是会报错的了。
+# 但是呢，如果就是使用F5执行整个file里面的代码，同一个path里面的module都是可以正常
+# 的使用的了。
+
+"""
+https://www.runoob.com/python3/python3-module.html
+这个文件里面介绍的包的使用方式，已经包的调用还是非常的好的，就是通俗易懂的感觉。
+
+记住，使用 from Package import specific_submodule 这种方法永远不会有错。事实上，
+这也是推荐的方法。除非是你要导入的子模块有可能和其他包的子模块重名。
+
+如果就是需要定义包，开始结构化的话，就是需要再重新过一下这个功能的了。特别是最后两个小节
+"""
+

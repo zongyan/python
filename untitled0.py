@@ -546,5 +546,28 @@ basket = ["apple", "orange", "apple", "pear", "orange", "banana"]
 for f in sorted(set(basket)):
     print(f)    
     
+print('================Module============')
+print("https://www.runoob.com/python3/python3-module.html")
+print('================Module============')  
+import sys # import sys 引入 python 标准库中的 sys.py 模块；这是引入某一模块的方法
+
+print("命令行参数如下：")
+for i in sys.argv:
+    print(i)
     
-    
+print("\n\nPython 路径为：", sys.path, "\n")
+ 
+# 这个功能还是很重要的，但是关于怎么创建一个module，然后import，这个就是需要
+# 在后期的过程中再研究一下的   
+#import support
+#support.print_func("Yan")
+
+import fib
+print(fib.fib(1000))
+print(fib.fib2(10))
+
+# todo: 这个就是一件非常有意思的事情，我就是用sys.path查看当前的path的时候，就是可以
+# 看到，这个module的py文件是可以放在当前的目录下的了，比如说，我定义support的形式
+# 但是诡异的是，我没有办法成功的导入support
+# 后来我就是把这个另外一个module fib放到了C:\\ProgramData\\Anaconda3，其实这两个都是
+# 在当前的path下面，这个就是一件非常诡异的事情了。

@@ -481,3 +481,70 @@ vec2 = [4, 3, -9]
 # 注意上面三个的区别，这个一个非常重要的特性了。
 
 [str(round(355/113, i)) for i in range(1, 6)]
+
+# 嵌套列表解析
+matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12]]
+print(f"{matrix}") # 3x4的矩阵，但是print功能不像matlab一样强大，不是很直观
+[[row[i] for row in matrix] for i in range(4)]
+
+transposed=[]
+for i in range(4):
+    transposed.append([row[i] for row in matrix])
+    
+transposed=[]
+for i in range(4):
+    transposed_row=[]
+    for row in matrix:
+        transposed_row.append(row[i])
+    transposed.append(transposed_row)
+    
+#上面三种实现matrix的transpose的方式的主要思想都是类似的，但是我还是不太熟悉，需要再回归
+    
+# del语句
+a = [-1, 1, 66.25, 333, 333, 1234.5]
+del a[0]
+print(a)    
+del a[2:4]
+print(a)    
+del a[:] # 注意这个和下面一个del a的区别
+print(a)
+del a # 这个是删除了实体变量，但是上面一个仅仅是删除了里面的所有元素
+print(a)
+
+# 元组和序列
+t =12345, 54321, "hello!"
+print(t[0])
+print(t)
+u = (t, (1,2,3,4,5))
+print(u)
+#从上面就是可以看出，元组定义的时候，是可以不存在圆括号的，
+#虽然这个很好，但是还是尽量的避免，因为就是可能引起不必要的bug出现
+
+knights = {'gallahad': 'the pure', 'robin': 'the brave'}
+for k,v in knights.items():
+    print(k, v)
+# 这个倒是一个很有意思的功能，k代表的是key，v代表的是value，
+# 还是可以这么使用。
+    
+for i, v in enumerate(['tic', 'tac', 'toe']):
+    print(i, v)
+    
+questions = ["name", "quest", "favirite color"]
+answers = ["lancelot", "the holy grail", "blue"]
+for q, a in zip(questions, answers):
+    print('What is your {0}?  It is {1}.'.format(q, a))
+# 这一个样子的功能，我之前还真的是没有见过呢，   
+
+# 知道了这一种用法，但是还是不明白这个的用法，
+for i in range(1, 10, 2):
+    print(i)
+
+for i in reversed(range(1, 10, 2)):
+    print(i) 
+    
+basket = ["apple", "orange", "apple", "pear", "orange", "banana"]
+for f in sorted(set(basket)):
+    print(f)    
+    
+    
+    

@@ -586,3 +586,107 @@ https://www.runoob.com/python3/python3-module.html
 如果就是需要定义包，开始结构化的话，就是需要再重新过一下这个功能的了。特别是最后两个小节
 """
 
+print('================IO============')
+print("https://www.runoob.com/python3/python3-inputoutput.html")
+print('================IO============')  
+
+s="hello, yan"
+str(s) # 用户易读的表达形式
+repr(s) # 解释器易读的表达形式，但是我还是没看出，这两者有什么区别的了。
+str(1/7)
+hello = 'hello, runoob\n'
+hellos = repr(hello)
+print(hellos)
+
+for x in range(1, 11):
+    print(repr(x).rjust(2), repr(x*x).rjust(3), end=' ')
+    # 注意前一行 'end' 的使用
+    print(repr(x*x*x).rjust(4)) #rjust是右对齐的意思
+    
+for x in range(1, 11):
+    print("{0:2d}{1:3d} {2:4d}". format(x, x*x, x*x*x))
+for x in range(1, 11):
+    print("{0:2d}{0:3d} {0:4d}". format(x, x*x, x*x*x))    
+# 但是这个例子，他就是没有解释的了，我也不太明白，但是大概是能够看明白的了。
+
+"12".zfill(5)
+
+print("{}网址：'{}！'".format("菜鸟教程", "zongyan.github.io"))
+
+print('{0} 和 {1}'.format('Google', 'Runoob'))
+print('{1} 和 {0}'.format('Google', 'Runoob'))
+# 上面两行例子就是非常的好，就是说如果是使用这个format的形式，会出现排序的现象
+# 系统也是会自动的选择排序的了。
+
+print('站点列表 {0}, {1}, 和 {other}。'.format('Google', 'Runoob', other='Taobao'))
+
+print('{name}网址： {site}'.format(name='菜鸟教程', site='www.runoob.com'))
+# 上面这个例子也是很好的，这个就是有点类似于字典的形式的了，但是就是不完全是字典的形式
+
+import math
+print("the value of PI is equal to {}.".format(math.pi))
+print("the value of PI is equal to {!r}.".format(math.pi))
+#!a (使用 ascii()), !s (使用 str()) 和 !r (使用 repr())
+print("the value of PI is equal to {0:.3f}".format(math.pi))
+#可选项 : 和格式标识符可以跟着字段名。 这就允许对值进行更好的格式化，上面这个就是对
+#pi去后三位小数的了。
+
+tab={"Google":1, "Runoob":2, "Taobao":3}
+for name, number in tab.items():
+    print("{0:20} ==> {1:10d}".format(name, number))
+# 明白了，对于这个冒号：后面的数，如果不加d，就是右边空格一段空白，如果后面加了d，就是
+# 左边是会空格出一段空白的了，另外，这个0 & 1的意思，就是说，这个其实是一个index的意思
+# 而不是其他的意思，所以必须就是从0开始，而且这个数字还是不能不写的
+
+tab={"Google":1, "Runoob":2, "Taobao":3}
+print("run:{0[Runoob]:d}; Google:{0[Google]:d}; TaoBae:{0[Taobao]:d}".format(tab))
+# 最简单的就是传入一个字典, 然后使用方括号 [] 来访问键值 :
+# 也可以通过在 table 变量前使用 ** 来实现相同的功能：    
+print("Runoob: {Runoob:d}; Google :{Google:d};Taobao:{Taobao:d}".format(**tab))
+
+"""
+上面这部分的内容，都是在讲解这个format是怎么使用的，但是呢，我还是对这个冒号前面的
+数字还是不够理解，我的理解他是一个index的感觉，然后这个index是从零开始的，这个理解是
+正确的。另外一种感觉，这个前面的数值，感觉总是0，这个也就是让我是有点匪夷所思的了，我
+就是不太明白，这个冒号前面的数字，到底是一个什么样子的作用存在
+
+我后来看了一下所有的代码，感觉这个冒号前面的数值，就是index的意思，但是呢，对于最后一个
+例子中，为什么总是0，我就是有点匪夷所思了，对了，这个也是可以理解的，因为format中就是仅仅
+是有一个数值，所以就是总是0的了
+
+也就是说，这个冒号前面的数值，就是index的意思的了。
+"""
+
+import math
+print("常量PI的近似值是%5.3f" % math.pi)
+
+#str.format()是一个比较新的函数，而是用%形式就是一个比较旧的语法，所以尽量还是使用
+#新的语法结构了
+
+name="Runoob"
+print(f"hello, {name}")
+
+strr=input("请输入：")
+print(f"您输入的是：{strr}")
+
+import os
+from pathlib import Path
+
+filepath = "./test.txt"
+full_filepath = os.path.join(os.path.dirname(__file__),filepath)
+
+f = open(full_filepath, "w") 
+f.write("Python is a good programming language\n Yes, it is!!!\n")
+f.close()
+
+"""
+这一段程序，就是用来打开某一段代码的程序，本来我的想法，就是使用F9运行，就是可以打开
+某一个文件，然后就是可以往里面写字符串的了。
+但是呢，就是遇到了这么一个问题，就是我用F9运行的时候，就是不清楚这个文件是创建在哪一个
+文件夹中的了，这个就是一个非常让人头疼的问题，就是不清楚这个spyder的path在哪里的了
+
+后来就是没有办法，我就是只是能够使用nick提供的代码了，然后就是用另外一种方式来读写
+文件的了。但是呢，这个也是遇到了另外一个问题，就是没有办法使用F9运行特定部分的代
+码（__file__）会报错，必须是新建一个file文件，然后就是使用F5的形式，才能够完成代码的
+运行
+"""

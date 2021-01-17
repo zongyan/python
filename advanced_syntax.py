@@ -699,5 +699,14 @@ print("https://www.runoob.com/python3/python3-file-methods.html")
 print('================File methods============')  
 
 """
-没有实力，就是一些介绍性的文字内容，过了一下
+没有实质性的代码，就是一些介绍性的文字内容，过了一下
+"""
+
+print('================OS file methods============')
+print("https://www.runoob.com/python3/python3-os-file-methods.html")
+print('================OS file methods============')  
+
+"""
+没有实质性的代码，就是一些介绍性的文字内容，感觉这部分的内容还是很重要的，
+但是我对这部分的代码不太熟悉，没有太多的实质性质的上手的内容
 """

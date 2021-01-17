@@ -693,3 +693,11 @@ f.close()
 
 #关于这个文件的读写部分，就是先是在另外一个文件中学习了，这个文件在相同的目录下面，
 #名字是叫做r_w_file.py
+
+print('================File methods============')
+print("https://www.runoob.com/python3/python3-file-methods.html")
+print('================File methods============')  
+
+"""
+没有实力，就是一些介绍性的文字内容，过了一下
+"""

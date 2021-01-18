@@ -710,3 +710,130 @@ print('================OS file methods============')
 没有实质性的代码，就是一些介绍性的文字内容，感觉这部分的内容还是很重要的，
 但是我对这部分的代码不太熟悉，没有太多的实质性质的上手的内容
 """
+print('================errors execptions============')
+print("https://www.runoob.com/python3/python3-errors-execptions.html")
+print('================errors execptions============')  
+
+while True:
+    try: 
+        x =int(input("请输入一个数字，而非字母或其他符号"))
+        break
+    except ValueError:
+        print("您输入的不是数字，请再次尝试输入！")
+"""    
+这个except倒是挺好用的，不过就是有一个难点，就是需要搞明白可能发生的各种bug，
+就是except 后面的这个Error，如果error的种类不对的话，那么这个error就是会被触发
+所以，对于不同的error种类来讲，这个确实是一个难点
+RuntimeError, TypeError, NameError, ValueError
+
+不过这个问题也是会有一个出路的，因为如果存在多个except的时候，最后一个except是可以
+不指明具体的错误内容的，我们就是可以使用这个点，
+不过我是觉得，主要还是依靠经验的积累了。
+"""  
+
+import sys
+
+for arg in sys.argv[1:]:
+    try:
+        f=open(arg, 'r')
+    except IOError:
+        print("cannot open", arg)
+    else:
+        print(arg, "has", len(f.readlines()), "lines")
+        f.close()      
+'''
+上面这几行代码，我也不知道为什么不能够运行的了，但是主题思想还是很清楚的了，就是先是
+执行try里面的代码，如果报错，就是会执行except的代码，并结束，否则就是会执行
+else里面的代码，
+'''
+
+def this_fails():
+    x = 1/0
+    
+try:
+    this_fails()
+except ZeroDivisionError as err:
+    print("handling run-time error:", err)
+
+try:
+    this_fails()
+except:
+    print("handling run-time error, yan zong") 
+"""
+通过这个上面的两个例子，就是可以看出，try不仅仅是可以侦测本行的代码，而且是可以侦测这个
+调用的函数里面的错误。
+另外一个，就是except不一定是需要指定相应的错误的，也是可以不需要输入相应的错误代码的，
+这个也是可以使用的了。
+"""    
+
+try:
+    runoob()
+except AssertionError as error:
+    print(error)
+else:
+    try:
+        with open('file.log') as file:
+            read_data = file.read()
+    except FileNotFoundError as fnf_error:
+        print(fnf_error)
+finally:
+    print('这句话，无论异常是否发生都会执行。')
+"""
+上面是介绍了这个try-except，try-except-else的使用，最后一个例子是try-except-finally
+的使用，就是从中间是可以看出来的，在finally的语句，总是会执行的，这个和else还是有点区别
+的
+"""
+
+x = 10
+if x > 5:
+    raise Exception('x 不能大于 5。x 的值为: {}'.format(x))
+    
+try:
+    raise NameError("Hi there")
+except NameError: 
+    print("An exception flew by!")
+    raise
+    
+try:
+    raise NameError("Hi there")
+except: 
+    print("An exception flew by!")
+    raise    
+    
+try:
+    raise NameError("Hi there")
+except: 
+    print("An exception flew by!")
+    #raise  
+"""
+最后两个例子就是可以看到，这个Hi there的异常是抛出来了，这个是由于except里面的raise
+引起的，但是我还是不明白，这个的用法，到底是用在哪里的了。
+"""      
+
+# 最后，还是有一个“用户自定义异常”，这个我就是暂时是没有看的了，如果以后需要用到，就是
+# 再返回来就是可以的了。
+# https://www.runoob.com/python3/python3-errors-execptions.html
+
+try:
+    raise KeyboardInterrupt
+finally:
+    print("goodbye, yan")
+
+"""
+如果一个异常在 try 子句里（或者在 except 和 else 子句里）被抛出，而又没有任何的 
+except 把它截住，那么这个异常会在 finally 子句执行后被抛出。
+
+换句话说，这个try的语句里面，如果出现了异常，如果没有except的话，就是会被finally抛出
+异常；如果有了except的话，就是可以会通过这个except进行抛出的了。
+
+而raise的作用，不像是except那样，是会用比如print的形式，把这个相应的字符串打印出来的
+了，而是会直接从系统层面返回一个error，或者是其他什么，就是以traceback开头的
+
+"""    
+
+"""
+对这个“定义清理行为”我还是不明白，不知道是个什么都关系，里面的代码我是看得明白的了。
+另外，还是提到了“预定义的清理行为”，我的理解，这个在file中使用得比较的多，比如说就是
+这个打开了文件之后，一定要记得关闭。现在就是就是可以用with的方式打开文件，他是会
+自动关闭的了。
+"""

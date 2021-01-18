@@ -837,3 +837,15 @@ except 把它截住，那么这个异常会在 finally 子句执行后被抛出�
 这个打开了文件之后，一定要记得关闭。现在就是就是可以用with的方式打开文件，他是会
 自动关闭的了。
 """
+
+print('================assert============')
+print("https://www.runoob.com/python3/python3-assert.html")
+print('================assert============')  
+# Python assert（断言）用于判断一个表达式，在表达式条件为 false 的时候触发异常。
+assert True
+assert False
+assert 1==1
+assert 1==2
+# 不过这个我还没有想好就是怎么用的了，柑橘额没有这个try except else finally实用
+# 一些
+

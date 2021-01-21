@@ -1086,10 +1086,48 @@ v1 = Vector(2,10)
 v2 = Vector(5,-2)
 print (v1 + v2)
 
+print('================namespace & scope============')
+print("https://www.runoob.com/python3/python3-namespace-scope.html")
+print('================namespace & scope============')  
 
+import builtins
+dir(builtins)
 
+num=1
+def fun1():
+    global num #要使用global来声明
+    print(num)
+    num=123
+    print(num)
+    
+fun1()
+print(num)
+"""
+从这个例子中就是可以看出，num刚开始是全局变量，然后就是经过
+function中的global声明之后，此时num就是和函数外的num相链接
+了，这样子，函数里面就是可以访问函数外面的变量了。
 
+或者话说，就是因为使用这个global之后，这个函数外面的变量和
+函数里面的变量是链接在一起了。
+"""
 
+"""
+外部的变量数值想传递函数内部，其实就是有两种方式，第一种方式就是在函数
+内部使用global声明一下；第二种方式就是使用变量传递传递的形式，如solution 2
+"""
+# solution 1
+a = 10
+def test():
+    global a
+    a = a + 1
+    print(a)
+test()
 
+# solution 2
+a = 10
+def test(a):
+    a = a + 1
+    print(a)
+test(a)
 
 

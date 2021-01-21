@@ -1157,4 +1157,8 @@ f.close()
 对的，上面的实验是验证通过的，当时就是因为这个工作目录不一致导致的了。
 """
 
+#另外，建议使用import os, 而不是from os import *
 
+import os
+dir(os)
+help(os)

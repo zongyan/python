@@ -1130,4 +1130,31 @@ def test(a):
     print(a)
 test(a)
 
+print('================standard library============')
+print("https://www.runoob.com/python3/python3-stdlib.html")
+print('================standard library============')  
+
+import os
+os.getcwd()#返回当前的工作目录
+os.chdir('C:/Users/yan/Documents/Projects/python')#修改当前工作目录
+os.getcwd()
+"""
+以上这个例子，我也是终于明白了之前的读写file总是没有办法成功的原因了
+因为之前就是F9直接运行，而工作目录并不是我们想要的文件目录下面，所以
+就是需要修改一下文件目录的了。我们可以做如下的实验
+"""
+
+import os
+os.getcwd()
+os.chdir('C:/Users/yan/Documents/Projects/python')#修改当前工作目录
+
+filepath = "./test.txt"
+f=open(filepath, 'w')
+f.write("Dr. Yan Zong Love Miss. Yuxin Song")
+f.close()
+
+"""
+对的，上面的实验是验证通过的，当时就是因为这个工作目录不一致导致的了。
+"""
+
 

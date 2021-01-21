@@ -846,6 +846,250 @@ assert True
 assert False
 assert 1==1
 assert 1==2
-# 不过这个我还没有想好就是怎么用的了，柑橘额没有这个try except else finally实用
-# 一些
+# 不过这个我还没有想好就是怎么用的了，暂时没有这个try except else finally实用
+
+print('================class============')
+print("https://www.runoob.com/python3/python3-class.html")
+print('================class============')  
+class MyClass:
+    """一个简单的类实例"""
+    i = 12345
+    def f(self):
+        return "hello world"
+    
+# 实例化类
+x = MyClass()
+
+#访问类的属性和方法
+print("MyClass类的属性i为",x.i)
+print("MyClass类的方法f输出为",x.f())
+
+#上面这个例子，便是一个简单的类的生命以及使用
+#我不太理解这个属性，方法的含义，我就是认为这个
+#就是一个类的变量，还有函数了。
+
+class Complex:
+    def __init__(self, realpart, imagpart):
+        self.r = realpart
+        self.i = imagpart
+x = Complex(3.0, -4.5)
+print(x.r, x.i)
+
+"""
+从这个例子就是可以看出，在class类的定义里面，就是必须是带
+有一个def的了。 不过为什么在第一个例子没有__init__()
+, 但是第二个例子里面就是有__init()__，我不清楚是为啥
+然后呢，在def里面，就是会有一个self，这个
+self的作用是个啥，具体我也说不清楚，但是不是一个变量，
+下面的这个就是有一定的解释
+"""
+
+class Test:
+    def prt(self):
+        print(self)
+        print(self.__class__)
+        
+t=Test()
+t.prt()
+
+"""
+类的方法与普通的函数只有一个特别的区别——它们必须有一个
+额外的第一个参数名称, 按照惯例它的名称是 self。
+
+self代表的是类的实例，代表当前对象的地址，而self.class则是指向
+类
+
+另外，self不是一个关键字，我们是可以换成其他的，也是可以的
+"""
+
+class Test:
+    def prt(yan):
+        print(yan)
+        print(yan.__class__)
+        
+t=Test()
+t.prt()
+
+"""
+虽然self不是关键字，但是我还是会坚持用self的，延续这个
+传统吧
+"""
+
+class people:
+    # 定义基本属性
+    name = ''
+    age = 0
+    # 定义私有属性，私有属性在类外部无法直接进行访问
+    __weight = 0
+    #定义构造方法
+    def __init__(self, n, a, w):
+        self.name = n
+        self.age = a
+        self.__weight = w
+    def speak(self):
+        print("%s说： 我%d岁。"%(self.name, self.age))
+
+#实例化类
+p=people("yan", 27, 100)
+p.speak()
+"""
+但是我还是不清楚为什么第一个就是需要使用__init__，第二个
+就是不需要使用的了，另外，为什么有的class里面就是会有
+__init__，但是有的里面就是没有的了。
+"""
+#类定义
+class people:
+    # 定义基本属性
+    name = ''
+    age = 0
+    # 定义私有属性，私有属性在类外部无法直接进行访问
+    __weight = 0
+    #定义构造方法
+    def __init__(self, n, a, w):
+        self.name = n
+        self.age = a
+        self.__weight = w
+    def speak(self):
+        print("%s说： 我%d岁。"%(self.name, self.age))
+
+#单继承示例
+class student(people):
+    grade = ""
+    def __init__(self, n, a, w, g):
+        # 调用父类的函数
+        people.__init__(self, n, a, w)
+        self.grade = g
+    #覆写父类的方法
+    def speak(self):
+        print("%s说： 我%d岁，我在都%d年纪。"%(self.name, self.age, self.grade))
+        
+s = student('ken',10,60,3)
+s.speak()
+
+
+# -------------------------
+#类定义
+class people:
+    # 定义基本属性
+    name = ''
+    age = 0
+    # 定义私有属性，私有属性在类外部无法直接进行访问
+    __weight = 0
+    #定义构造方法
+    def __init__(self, n, a, w):
+        self.name = n
+        self.age = a
+        self.__weight = w
+    def speak(self):
+        print("%s说： 我%d岁。"%(self.name, self.age))
+
+#单继承示例
+class student(people):
+    grade = ""
+    def __init__(self, n, a, w, g):
+        # 调用父类的函数
+        people.__init__(self, n, a, w)
+        self.grade = g
+    #覆写父类的方法
+    def speak(self):
+        print("%s说： 我%d岁，我在都%d年纪。"%(self.name, self.age, self.grade))
+        
+#另一个类，多重继承之前的准备
+class speaker():
+    topic=""
+    name=""
+    def __init__(self, n, t):
+        self.name=n
+        self.topic=t
+    def speak(self):
+        print("我叫%s,我是一名演说家，我演讲的主题是%s"%(self.name, self.topic))
+    
+#多重继承的
+
+class sample(speaker, student):
+    a= ""
+    def __init__(self, n, a, w, g, t):
+        student.__init__(self, n, a, w, g)
+        speaker.__init__(self, n, t)
+    
+test = sample("Tim", 25, 80, 4, "Python")
+test.speak()
+
+# 方法重写，就是父类的功能不能够满足你，所以就是可以重新构造子类
+
+class Parent:
+    def myMethod(self):
+        print("调用父类方法")
+        
+class Child(Parent):
+    def myMethod(self):
+        print("调用子类方法")
+        
+c = Child() # 子类实例
+c.myMethod() # 子类调用重写方法
+super(Child, c).myMethod() # 用子类对象调用父类已被覆盖的方法
+# 这个super倒是一个非常有意思的函数，
+
+#类的私有变量&方法
+class JustCounter:
+    __secreCount=0 # 因为前面个有两个下划线，所以是私有变量
+    publicCount=0 # 公开变量
+    
+    def count(self):
+        self.__secreCount += 1
+        self.publicCount += 1
+        print(self.__secreCount)
+        
+counter=JustCounter()
+counter.count()
+counter.count()
+print(counter.publicCount)
+print(counter.__secretCount) # 这个就是会报错，就是因为这个变量
+                    #是类的私有变量
+                    
+class Site:
+    def __init__(self, name, url):
+        self.name = name # public
+        self.__url= url #private
+    
+    def who(self):
+        print('name  : ', self.name)
+        print('url : ', self.__url)
+
+    def __foo(self): # 私有方法
+        print('这是私有方法')
+        
+    def foo(self):
+        print('这是公共方法')
+        self.__foo()
+    # 就算是_foo & foo后面部分相同，但是还是不同类
+
+x=Site("Yan Zong", "yzong.com")
+x.who()
+x.foo()        
+
+# 上面就是给出了私有变量，私有方法的方式，就是在名字前面加两个下划线即可
+#如果是加了__，就算名字后面是完全一样的，两者还是不同的变量，或者不同的方法
+
+class Vector:
+   def __init__(self, a, b):
+      self.a = a
+      self.b = b
+ 
+   def __str__(self):
+      return 'Vector (%d, %d)' % (self.a, self.b)
+   
+   def __add__(self,other):
+      return Vector(self.a + other.a, self.b + other.b)
+ 
+v1 = Vector(2,10)
+v2 = Vector(5,-2)
+print (v1 + v2)
+
+
+
+
+
+
+
 

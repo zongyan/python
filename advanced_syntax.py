@@ -1162,3 +1162,70 @@ f.close()
 import os
 dir(os)
 help(os)
+
+import shutil
+# 这个包主要就是完成了对日常文件和目录的管理任务
+
+import glob
+glob.glob("*.py") #从目录通配符搜索中生成文件列表
+
+import sys
+print(sys.argv) # 我还是不知道这个是干嘛的
+
+"tea for too".replace("too", "two")
+
+import math
+math.sin(0)
+math.sin(math.pi/2)
+math.log(1024, 2)
+
+import random
+random.choice(["apple", "pear", "banana"])
+random.sample(range(100), 10)
+random.random()    # random float
+
+# python还是可以访问互联网的，但是这个功能暂时就是先搁置了，
+# 对于我们机器学习的学习，没有任何的好处
+
+from datetime import date
+now = date.today()
+print(now)
+now.strftime("%m-%d-%y. %d %b %Y is a %A on the %d day of %B")
+
+#数据压缩
+import zlib
+s = b"witch which has which witches wrist watch"
+len(s)
+t=zlib.compress(s)
+len(t)
+zlib.decompress(t)
+zlib.crc32(s)
+
+# 没有想到这个python的zlib包提供了这么强大的功能，不仅仅是可以
+# 压缩包的，还是可以检查crc的
+
+#测试模块
+def average(values):
+    """Computes the arithmetic mean of a list of numbers.
+    >>> print(average([20, 30, 70]))
+    40.0
+    """
+    return sum(values) / len(values)
+
+import doctest
+doctest.testmod()
+
+import unittest
+
+class TestStatisticalFunctions(unittest.TestCase):
+
+    def test_average(self):
+        self.assertEqual(average([20, 30, 70]), 40.0)
+        self.assertEqual(round(average([1, 5, 7]), 1), 4.3)
+        self.assertRaises(ZeroDivisionError, average, [])
+        self.assertRaises(TypeError, average, 20, 30, 70)
+
+unittest.main() # Calling from the command line invokes all tests
+
+# 这部分的代码我也不知道是个啥意思，但是我是觉得，只要明白有了这么一个功能，以后
+# 再研究就是的了。

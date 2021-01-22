@@ -109,3 +109,22 @@ print(data_shaped)
 data=np.ones((4,3,2)) # 4行，3列，2纵向的一个array
 print(data)
 # 就算是我看了解释，还是不明白这个4x3x2的数据是怎么打印出来的
+
+#-----------------------------------------------------------------------------
+# Practical Usage
+
+import numpy as np
+predictions=np.array([1, 1, 1])
+labels=np.array([2, 3, 4])
+error=(1/3)*np.sum(np.square(predictions-labels))
+print(error)
+
+"""
+后来就是又举出了spreadsheet，audio，image，language的例子了，我了的理解，这一些的例子，
+通过使用这个numpy工具包，就是可以很好的转换成一个矩阵的问题了，然后就是通过这个矩阵进行
+数据处理了，而numpy的这个矩阵相关的处理是非常的强大的。
+
+我只是通过这个简单的教程了解了一下numpy，今后的开发，还是需要查看大量的资料，然后多多练习
+"""
+# 我对这个word2vec embedding不太了解是个什么内容，可以通过下面这个链接了解一下
+# https://jalammar.github.io/illustrated-word2vec/

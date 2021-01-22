@@ -128,3 +128,9 @@ print(error)
 """
 # 我对这个word2vec embedding不太了解是个什么内容，可以通过下面这个链接了解一下
 # https://jalammar.github.io/illustrated-word2vec/
+
+'''
+另外，如果就是想要真正的了解，使用这个NumPy，还是建议这个官方的文档，如下所示
+https://numpy.org/doc/
+上面的这个tutorial只是入门了一下
+'''

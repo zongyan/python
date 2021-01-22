@@ -103,3 +103,9 @@ data_shaped=data.reshape(3, 2)
 print(data_shaped)
 
 #这个reshape的功能到底听好玩儿的，有点意思
+
+#-----------------------------------------------------------------------------
+# high dimension 
+data=np.ones((4,3,2)) # 4行，3列，2纵向的一个array
+print(data)
+# 就算是我看了解释，还是不明白这个4x3x2的数据是怎么打印出来的

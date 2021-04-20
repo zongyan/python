@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-Spyder Editor
+Created on Tue Apr 20 16:49:59 2021
 
 This is a series of script files, according to the Deep Learning with PyTorch 
 60 minutes tutorial from the folllowing link 
 https://pytorch.org/tutorials/beginner/deep_learning_60min_blitz.html
+
+@author: Yan Zong
 """
 
 import torch

@@ -37,3 +37,34 @@ optim = torch.optim.SGD(model.parameters(), lr=1e-2, momentum=0.9)
 # parameter by its gradient stored in .grad.
 optim.step() #gradient descent
 
+
+
+
+"""
+########## Differentiation in Autograd ##########
+the following shows how autograd collects gradients
+"""
+import torch
+
+a = torch.tensor([2., 3.], requires_grad=True) # This signals to autograd that 
+                                               # every operation on them should 
+                                               # be tracked.
+b = torch.tensor([6., 4.], requires_grad=True)
+
+# assume a and b to be parameters of an NN, and Q to be the error.
+Q = 3*a**3 - b**2
+
+# call .backward() on Q, autograd calculates these gradients and stores them
+# in the respective tensors’ .grad attribute.
+# ToDo: I dont understand the line 60?
+external_grad = torch.tensor([1., 1.])
+Q.backward(gradient=external_grad)
+
+# check if collected gradients are correct
+print(9*a**2 == a.grad)
+print(-2*b == b.grad)
+
+# IMPORTANT NOTES
+# what I have learned from the following example is that; autograd calculates 
+# gradients, and stores them in the respective tensors’ .grad attribute.
+

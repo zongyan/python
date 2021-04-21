@@ -95,11 +95,11 @@ out.backward(torch.randn(1, 10)) # backprops with random gradients
                                  # .grad attribute.     
                                  # ToDo: line 91, out.backward is used, but line 
                                  # 132 loss.backward is utilised, what is the 
-                                 # difference
+                                 # difference -> ONLY use loss.backward, NOT out.backward
                                  
 """
 3. compute the loss, ToDo, where is ' Propagate gradients back into the 
-   network’s parameters', is this done automatically?
+   network’s parameters', is this done automatically? --> yes, automatically
 """                                 
 output=net(input)
 target=torch.randn(10)
@@ -131,7 +131,11 @@ print(net.conv1.bias.grad)
 learning_rate = 0.01
 for f in net.parameters():
     f.data.sub_(f.grad.data*learning_rate)
-    
+
+'''
+optimiser fails to affect the performance of trained NN, it ONLY can affect the 
+training speed, but I still need to learn these different optimisers
+'''    
 import torch.optim as optim
 optimizer =optim.SGD(net.parameters(), lr=0.01)   
 

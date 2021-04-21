@@ -143,7 +143,7 @@ print('Finished Training')
 5. Save the trained model
 '''
 PATH='./cifar_net.pth'
-torch.save(net.state_dict(),PATH)
+torch.save(net.state_dict(),PATH) # save to the root folder of this file.
 
 '''
 6. Test the network on the test data

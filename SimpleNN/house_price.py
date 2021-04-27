@@ -3,6 +3,9 @@
 # PyTorch 1.7.0-CPU Anaconda3-2020.02  Python 3.7.6
 # Windows 10 
 
+# This code is from the following link:
+# https://visualstudiomagazine.com/articles/2021/02/11/pytorch-define.aspx    
+
 import numpy as np
 import time
 import torch as T
@@ -132,10 +135,10 @@ def main():
   
   # 1. create DataLoader objects
   print("Creating Houses Dataset objects ")
-  train_file = ".\houses_train.txt"
+  train_file = "./houses_train.txt"
   train_ds = HouseDataset(train_file)  # all 200 rows
 
-  test_file = ".\houses_test.txt"
+  test_file = "./houses_test.txt"
   test_ds = HouseDataset(test_file)  # all 40 rows
 
   bat_size = 10
@@ -181,7 +184,7 @@ def main():
 
       # save checkpoint
       dt = time.strftime("%Y_%m_%d-%H_%M_%S")
-      fn = ".\\Log\\" + str(dt) + str("-") + \
+      fn = "./Log/" + str(dt) + str("-") + \
        str(epoch) + "_checkpoint.pt"
 
       info_dict = { 
@@ -225,7 +228,7 @@ def main():
 
   # 6. save final model (state_dict approach)
   print("\nSaving trained model state")
-  fn = ".\\Models\\houses_model.pth"
+  fn = "./Models/houses_model.pth"
   T.save(net.state_dict(), fn)
 
   # saved_model = Net()

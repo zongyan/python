@@ -126,6 +126,8 @@ def accuracy(model, ds, pct):
     with T.no_grad():
       oupt = model(X)         # computed price
 
+    # item() is used to extract a single value, for current versions of PyTorch
+    # this is unnecessary, but I will keep this 
     abs_delta = np.abs(oupt.item() - Y.item())
     max_allow = np.abs(pct * Y.item())
     if abs_delta < max_allow:
@@ -212,37 +214,80 @@ def main():
   ep_log_interval = 50
   lrn_rate = 0.005
 
-  loss_func = T.nn.MSELoss()
+  loss_func = T.nn.MSELoss() # Create a criterion that measures the mean 
+                             # squared error (squared L2 norm) between each 
+                             # element in the input and target.
   # optimizer = T.optim.SGD(net.parameters(), lr=lrn_rate)
   optimizer = T.optim.Adam(net.parameters(), lr=lrn_rate)
-
+  """
+  For Adam, it's best to use a small initial learning rate because the algorithm 
+  can dynamically change the learning rate during training. 
+  
+  PyTorch supports 11 different training optimization techniques. Understanding 
+  all the details of PyTorch optimizers is difficult.
+    
+  Optimizers are important but it's better to learn about different optimizers 
+  by experimenting with them slowly over time, with different problems. 
+  """
   print("\nbat_size = %3d " % bat_size)
   print("loss = " + str(loss_func))
   print("optimizer = Adam")
   print("max_epochs = %3d " % max_epochs)
   print("lrn_rate = %0.3f " % lrn_rate)
 
+  """
+  The following is the high-level pseudo-code for training a neural network 
+  loop max_epochs times
+    loop thru all batches of train data
+      read a batch of data (inputs, targets)
+      compute outputs using the inputs
+      compute error between outputs and targets
+      use error to update weights and biases
+    end-loop (all batches)
+  end-loop (all epochs)
+  """
   print("\nStarting training with saved checkpoints")
   net.train()  # set mode
   for epoch in range(0, max_epochs):
     T.manual_seed(1+epoch)  # recovery reproducibility
+    # print(f"debug: the value of epoch is {epoch}")
+    # during each epoch, the seed number is set to a new value (i.e. 1+epoch)
     epoch_loss = 0  # for one full epoch
 
     for (batch_idx, batch) in enumerate(train_ldr):
       (X, Y) = batch                 # (predictors, targets)
-      optimizer.zero_grad()          # prepare gradients
+      optimizer.zero_grad()          # prepare and clear gradients
       oupt = net(X)                  # predicted prices
-      loss_val = loss_func(oupt, Y)  # avg per item in batch
-      epoch_loss += loss_val.item()  # accumulate avgs
-      loss_val.backward()            # compute gradients
-      optimizer.step()               # update wts
+      loss_val = loss_func(oupt, Y)  # avg per item in batch, calculate the value 
+                                     # of the loss function
+      epoch_loss += loss_val.item()  # accumulate loss function value, the second 
+                                     # solution of monitoring loss value is used
+      loss_val.backward()            # This computes the gradients of the 
+                                     # output node weights and bias, and then 
+                                     # the hid2 layer gradients, and then the 
+                                     # hid1 layer gradients.
+      optimizer.step()               # the newly computed gradients is used to 
+                                     # update all the weights and biases in the 
+                                     # neural network. 
 
     if epoch % ep_log_interval == 0:
       print("epoch = %4d   loss = %0.4f" % \
        (epoch, epoch_loss))
+      """
+      see the following link
+      https://python-reference.readthedocs.io/en/latest/docs/str/formatting.html
+      for more details about the formats the string
+      """
 
       # save checkpoint
       dt = time.strftime("%Y_%m_%d-%H_%M_%S")
+      """
+      print(time.strftime("%Y_%m_%d-%H_%M_%S"))
+      output is: 2021_04_28-21_49_12
+      
+      对于一般表达式来说，反斜杠后直接回车即可实现续行，使用的关键在于反斜杠后不能用
+      空格或者其他符号。
+      """      
       fn = "./Log/" + str(dt) + str("-") + \
        str(epoch) + "_checkpoint.pt"
 
@@ -257,7 +302,7 @@ def main():
 
   # 4. evaluate model accuracy
   print("\nComputing model accuracy")
-  net.eval()
+  net.eval() # set mode
   acc_train = accuracy(net, train_ds, 0.10) 
   print("Accuracy (within 0.10) on train data = %0.4f" % \
     acc_train)
@@ -288,9 +333,16 @@ def main():
   # 6. save final model (state_dict approach)
   print("\nSaving trained model state")
   fn = "./Models/houses_model.pth" # directory path
-  T.save(net.state_dict(), fn)
-
-  # saved_model = Net()
+  T.save(net.state_dict(), fn) # the state_dict (only weights and biases) 
+                               # approach is used for storing the trained model. 
+                               # The ".pth" extension is usually used for saving
+                               # a trained model.
+                               
+  """
+  Before loading a saved trained model, the model's class definition must
+  be defined in the program. 
+  """                           
+  # saved_model = Net().to(device)
   # saved_model.load_state_dict(T.load(fn))
   # use saved_model to make prediction(s)
 

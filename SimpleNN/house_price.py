@@ -1,19 +1,31 @@
-# house_price.py
 # predict price from AC, sq ft, style, nearest school
-# PyTorch 1.7.0-CPU Anaconda3-2020.02  Python 3.7.6
+# PyTorch 1.8.1-CPU Miniconda3-2021.04  Python 3.7.10
 # Windows 10 
 
-# This code is from the following link:
-# https://visualstudiomagazine.com/articles/2021/02/11/pytorch-define.aspx    
+# The code, and more details and explanations are referred to the following 
+# three links: 
+# https://visualstudiomagazine.com/articles/2021/02/11/pytorch-define.aspx 
+# https://visualstudiomagazine.com/articles/2021/03/03/pytorch-neural-regression.aspx
+# https://visualstudiomagazine.com/articles/2021/03/12/pytorch-model-accuracy.aspx
+
+# Note: all the training and testing data sets are already normalised, and two 
+# subfolders need to be created, one is called the 'Log', the other one is 'Models'
 
 import numpy as np
 import time
 import torch as T
-device = T.device("cpu")  # apply to Tensor or Module
+
+use_cuda = T.cuda.is_available()
+print(f"\ndebug: use_cuda is equal to {use_cuda} \n")
+# device = T.device("cuda" if use_cuda else "cpu")
+device = T.device("cpu")  # an object representing the device on which a 
+                          # torch.Tensor is or will be allocated.
+print(f"\ndebug: device is equal to {device} \n")
 
 # -----------------------------------------------------------
 
-class HouseDataset(T.utils.data.Dataset):
+class HouseDataset(T.utils.data.Dataset): # T.utils.data.Dataset is an abstract 
+                                          # class representing a Dataset
   # AC  sq ft   style  price   school
   # -1  0.2500  0 1 0  0.5650  0 1 0
   #  1  0.1275  1 0 0  0.3710  0 0 1
@@ -36,8 +48,25 @@ class HouseDataset(T.utils.data.Dataset):
       dtype=T.float32).to(device)
 
   def __len__(self):
-    return len(self.x_data)
-
+    return len(self.x_data) # returns the number of items in an object, which 
+                            # also depends on the type of data object, see the 
+                            # following comments
+    """
+    import torch as T
+    
+    debug_x = T.rand((3))
+    print(debug_x)
+    print(len(debug_x)) # equal to 3
+    
+    debug_x = T.rand((2, 3))
+    print(debug_x)
+    print(len(debug_x)) # equal to 2
+    
+    debug_x = T.rand((3, 4, 5))
+    print(debug_x)
+    print(len(debug_x)) # equal to 3    
+    """
+                            
   def __getitem__(self, idx):
     preds = self.x_data[idx,:]  # or just [idx]
     price = self.y_data[idx,:] 
@@ -45,13 +74,23 @@ class HouseDataset(T.utils.data.Dataset):
 
 # -----------------------------------------------------------
 
-class Net(T.nn.Module):
+class Net(T.nn.Module): # base class for all neural network modules.
   def __init__(self):
     super(Net, self).__init__()
     self.hid1 = T.nn.Linear(8, 10)  # 8-(10-10)-1
-    self.hid2 = T.nn.Linear(10, 10)
-    self.oupt = T.nn.Linear(10, 1)
+    self.hid2 = T.nn.Linear(10, 10) # applies a linear transformation to the 
+    self.oupt = T.nn.Linear(10, 1) # incoming data: Y=XW+B
 
+    """
+    randomly configre the weights, and set the biases to zero, for most neural 
+    regression problems, the uniform_() and xavier_uniform_() work well, and the 
+    uniform_() in the following form, that is T.nn.init.uniform_(self.hid1.weight,
+    -0.05, 0.05). This means the range of random values should be definied. 
+    
+    For convenience, I prefer use the xavier_uniform_(), and xavier_uniform_() 
+    computes the range values based on the number of nodes in the layer to 
+    which it is applied.
+    """
     T.nn.init.xavier_uniform_(self.hid1.weight)
     T.nn.init.zeros_(self.hid1.bias)
     T.nn.init.xavier_uniform_(self.hid2.weight)
@@ -60,6 +99,16 @@ class Net(T.nn.Module):
     T.nn.init.zeros_(self.oupt.bias)
 
   def forward(self, x):
+    """
+    Multiple versions of functions (e.g. relu) exist mostly. There is no easy 
+    way to deal with the confusion of multiple versions of some PyTorch 
+    functions.
+
+    What I can do is to compare the difference of them when using the this 
+    activation function.
+
+    relu() and tanh() usually work well for neural regression problems
+    """
     z = T.relu(self.hid1(x))
     z = T.relu(self.hid2(z))
     z = self.oupt(z)  # no activation
@@ -130,12 +179,17 @@ def baseline_acc(ds, pct):
 def main():
   # 0. get started
   print("\nBegin predict House price \n")
-  T.manual_seed(4)  # representative results 
+  """
+  see the following link
+  https://machinelearningmastery.com/how-to-generate-random-numbers-in-python/
+  and 'Generating the Random Numbers.pdf' for more details
+  """
+  T.manual_seed(4)  # sets the seed values, and the trainined model is reproducible
   np.random.seed(4)
   
   # 1. create DataLoader objects
   print("Creating Houses Dataset objects ")
-  train_file = "./houses_train.txt"
+  train_file = "./houses_train.txt"  # all data sets are normalised
   train_ds = HouseDataset(train_file)  # all 200 rows
 
   test_file = "./houses_test.txt"
@@ -144,9 +198,14 @@ def main():
   bat_size = 10
   train_ldr = T.utils.data.DataLoader(train_ds,
     batch_size=bat_size, shuffle=True)
-
+  """
+  DataLoader: combines a dataset and a sampler, and provides an iterable over 
+  the given dataset. Please see the following link:  
+  https://pytorch.org/docs/stable/data.html?highlight=dataloader#torch.utils.data.DataLoader
+  """
+  
   # 2. create network
-  net = Net().to(device)
+  net = Net().to(device) # specify a device (i.e. cpu or cuda) for use
 
   # 3. train model
   max_epochs = 500
@@ -228,7 +287,7 @@ def main():
 
   # 6. save final model (state_dict approach)
   print("\nSaving trained model state")
-  fn = "./Models/houses_model.pth"
+  fn = "./Models/houses_model.pth" # directory path
   T.save(net.state_dict(), fn)
 
   # saved_model = Net()

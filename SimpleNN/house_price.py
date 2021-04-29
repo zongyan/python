@@ -1,16 +1,21 @@
-# predict price from AC, sq ft, style, nearest school
-# PyTorch 1.8.1-CPU Miniconda3-2021.04  Python 3.7.10
-# Windows 10 
-
-# The code, and more details and explanations are referred to the following 
-# three links: 
-# https://visualstudiomagazine.com/articles/2021/02/11/pytorch-define.aspx 
-# https://visualstudiomagazine.com/articles/2021/03/03/pytorch-neural-regression.aspx
-# https://visualstudiomagazine.com/articles/2021/03/12/pytorch-model-accuracy.aspx
-
+"""############################################################################
+# IDE: PyTorch 1.8.1-CPU, Miniconda3-2021.04, Python 3.7.10
+#
 # Note: all the training and testing data sets are already normalised, and two 
-# subfolders need to be created, one is called the 'Log', the other one is 'Models'
-
+#       subfolders need to be created, one is called the 'Log', the other one 
+#       is 'Models'
+#
+#       The code, and more details and explanations are referred to the following 
+#       four links: 
+#       0_preparing data:
+#       https://visualstudiomagazine.com/articles/2021/04/01/pytorch-streaming.aspx    
+#       1_defining a neural network
+#       https://visualstudiomagazine.com/articles/2021/02/11/pytorch-define.aspx 
+#       2_training a neural network
+#       https://visualstudiomagazine.com/articles/2021/03/03/pytorch-neural-regression.aspx
+#       3_evaluating a trained model
+#       https://visualstudiomagazine.com/articles/2021/03/12/pytorch-model-accuracy.aspx
+############################################################################"""
 import numpy as np
 import time
 import torch as T
@@ -303,6 +308,13 @@ def main():
   # 4. evaluate model accuracy
   print("\nComputing model accuracy")
   net.eval() # set mode
+  """
+  Set the trained model in evaluation mode.
+  
+  This has any effect only on certain modules. For example, in the Dropout module
+  the outputs are scaled by a factor of 1/(1-p) during training; in evaluation, 
+  the module simply computes an identity function.
+  """
   acc_train = accuracy(net, train_ds, 0.10) 
   print("Accuracy (within 0.10) on train data = %0.4f" % \
     acc_train)
@@ -323,8 +335,16 @@ def main():
     dtype=np.float32)
   unk = T.tensor(unk, dtype=T.float32).to(device) 
 
-  with T.no_grad():
+  """
+  When network predicting, disabling gradient calculation (i.e. set 'requires_grad'
+  to False). 
+  After that, enable gradient calculation set 'requires_grad' to previous value.
+
+  This will reduce memory consumption for computations.
+  """
+  with T.no_grad(): # no need to compute the gradient since it isn't for training
     pred_price = net(unk)
+
   pred_price = pred_price.item()  # scalar
   str_price = \
     "${:,.2f}".format(pred_price * 1000000)

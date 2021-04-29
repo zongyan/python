@@ -8,7 +8,7 @@
 #       The code, and more details and explanations are referred to the following 
 #       four links: 
 #       0_preparing data:
-#       https://visualstudiomagazine.com/articles/2021/04/01/pytorch-streaming.aspx    
+#       https://visualstudiomagazine.com/articles/2021/02/02/pytorch-prepare.aspx    
 #       1_defining a neural network
 #       https://visualstudiomagazine.com/articles/2021/02/11/pytorch-define.aspx 
 #       2_training a neural network

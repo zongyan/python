@@ -29,6 +29,20 @@ print(f"\ndebug: device is equal to {device} \n")
 
 # -----------------------------------------------------------
 
+"""
+A PyTorch Dataset can be seen as an interface that must be implemented. At a minimum,
+a __init__() method which reads data from file into memory, 
+a __len__() method which returns the total number of items in the source data, 
+a __getitem__() method which returns a single data item, must be defined 
+
+Because conversion to tensors is a relatively expensive operation, it's usually 
+better to convert the data once in __init__() rather than repeatedly in 
+the __getitem__() method.
+
+To extract values from a Dataset, no need to call the __getitem__() method 
+directly. If accessing a Dataset object using indexing, or using the built-in 
+Python enumerate() function, the __getitem__ method() is automatically called.
+"""
 class HouseDataset(T.utils.data.Dataset): # T.utils.data.Dataset is an abstract 
                                           # class representing a Dataset
   # AC  sq ft   style  price   school
@@ -39,23 +53,44 @@ class HouseDataset(T.utils.data.Dataset): # T.utils.data.Dataset is an abstract
   # school: johnson, kennedy, lincoln
 
   def __init__(self, src_file, m_rows=None):
+    """
+    Python has dozens of ways to read a text le into memory, I need to choose 
+    the perference in the future.
+    """
     all_xy = np.loadtxt(src_file, max_rows=m_rows,
       usecols=[0,1,2,3,4,5,6,7,8], delimiter="\t",
       # usecols=range(0,9), delimiter="\t",
-      comments="#", skiprows=0, dtype=np.float32)
-
+      comments="#", skiprows=0, dtype=np.float32) # all columns are read
+    
+    print(f"\ndebug: all_xy is {all_xy} \n")     
+    
     tmp_x = all_xy[:,[0,1,2,3,4,6,7,8]]
+    # For regression problems, PyTorch requires a two-dimensional matrix of 
+    # target values rather than a one-dimensional vector
     tmp_y = all_xy[:,5].reshape(-1,1)    # 2-D required
+                                         # -1 in reshape() is to let the 
+                                         # interpreter itself figure out the 
+                                         # correct value for the number of rows.
+                                         # the position of -1 should be the 
+                                         # the number of rows.
+
+    print(f"\ndebug: tmp_x is {tmp_x} \n")     
+    print(f"\ndebug: tmp_y is {tmp_y} \n")     
 
     self.x_data = T.tensor(tmp_x, \
       dtype=T.float32).to(device)
     self.y_data = T.tensor(tmp_y, \
       dtype=T.float32).to(device)
 
+    print(f"\nself.x_data is {self.x_data} \n")     
+    print(f"\nself.y_data is {self.y_data} \n")     
+
   def __len__(self):
-    return len(self.x_data) # returns the number of items in an object, which 
+    return len(self.x_data) # returns the number of items in an object (the 
+                            # actual number of lines of data read), which 
                             # also depends on the type of data object, see the 
                             # following comments
+                            #
     """
     import torch as T
     
@@ -75,7 +110,14 @@ class HouseDataset(T.utils.data.Dataset): # T.utils.data.Dataset is an abstract
   def __getitem__(self, idx):
     preds = self.x_data[idx,:]  # or just [idx]
     price = self.y_data[idx,:] 
-    return (preds, price)       # tuple of two matrices 
+    return (preds, price)       # tuple of two matrices
+
+    # sample = {
+    # 'predictors' : preds,
+    # 'prices' : price
+    # }
+    # return sample   # A common alternative is to return the two matrices as 
+    #                 # a Dictionary
 
 # -----------------------------------------------------------
 
@@ -274,6 +316,8 @@ def main():
       optimizer.step()               # the newly computed gradients is used to 
                                      # update all the weights and biases in the 
                                      # neural network. 
+      # print(f"\ndebug: batch_idx is {batch_idx} \n") # --> batch index     
+      # print(f"\ndebug: batch is {batch} \n") # --> batch index     
 
     if epoch % ep_log_interval == 0:
       print("epoch = %4d   loss = %0.4f" % \

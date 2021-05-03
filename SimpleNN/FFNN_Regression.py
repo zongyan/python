@@ -19,6 +19,7 @@
 import numpy as np
 import time
 import torch as T
+import matplotlib.pyplot as plt
 
 use_cuda = T.cuda.is_available()
 print(f"\ndebug: use_cuda is equal to {use_cuda} \n")
@@ -167,7 +168,7 @@ def accuracy(model, ds, pct):
   # assumes model.eval()
   # percent correct within pct of true house price
   n_correct = 0; n_wrong = 0
-
+  
   for i in range(len(ds)):
     (X, Y) = ds[i]            # (predictors, target)
     with T.no_grad():
@@ -295,6 +296,7 @@ def main():
   """
   print("\nStarting training with saved checkpoints")
   net.train()  # set mode
+  e_loss = []
   for epoch in range(0, max_epochs):
     T.manual_seed(1+epoch)  # recovery reproducibility
     # print(f"debug: the value of epoch is {epoch}")
@@ -318,7 +320,9 @@ def main():
                                      # neural network. 
       # print(f"\ndebug: batch_idx is {batch_idx} \n") # --> batch index     
       # print(f"\ndebug: batch is {batch} \n") # --> batch index     
-
+    
+    e_loss.append(loss_val.item())
+    
     if epoch % ep_log_interval == 0:
       print("epoch = %4d   loss = %0.4f" % \
        (epoch, epoch_loss))
@@ -349,6 +353,13 @@ def main():
 
   print("Done ")
 
+  fig = plt.figure(figsize=(6.5,6.5)) # width=6.5inches, height=6.5inches
+  plt.plot(e_loss)
+  plt.title("Evolution of Loss during the Training")
+  plt.xlabel('Epoch')
+  plt.ylabel('Summation of Loss in Each Epoch')  
+  plt.show()   
+
   # 4. evaluate model accuracy
   print("\nComputing model accuracy")
   net.eval() # set mode
@@ -363,9 +374,42 @@ def main():
   print("Accuracy (within 0.10) on train data = %0.4f" % \
     acc_train)
 
+  e_delta = []  
+  for i in range(len(train_ds)):
+    (X, Y) = train_ds[i]    # (predictors, target)
+    with T.no_grad():
+      oupt = net(X)         # computed price
+    
+    delta = oupt.item() - Y.item()
+    e_delta.append(delta)
+    
+  plt.figure(figsize=(6.5,6.5)) # width=6.5inches, height=6.5inches
+  plt.plot(e_delta)
+  plt.title("Error in the Training Data")
+  plt.xlabel('Data')
+  plt.ylabel('Error')  
+  plt.show()   
+
   acc_test = accuracy(net, test_ds, 0.10) 
   print("Accuracy (within 0.10) on test data  = %0.4f" % \
     acc_test)
+      
+  e_delta = []
+  for i in range(len(test_ds)):
+    (X, Y) = train_ds[i]    # (predictors, target)
+    with T.no_grad():
+      oupt = net(X)         # computed price
+    
+    delta = oupt.item() - Y.item()
+    e_delta.append(delta)
+    
+  plt.figure(figsize=(6.5,6.5)) # width=6.5inches, height=6.5inches
+  plt.plot(e_delta)
+  plt.title("Error in the Testing Data")
+  plt.xlabel('Data')
+  plt.ylabel('Error')  
+  plt.show()   
+
 
   # base_acc_train = baseline_acc(train_ds, 0.10) 
   # print("%0.4f" % base_acc_train)  # 0.7000

@@ -256,6 +256,26 @@ def main():
   
   # 2. create network
   net = Net().to(device) # specify a device (i.e. cpu or cuda) for use
+  
+  net.eval() # set mode
+  
+  original_e_delta_train = []  
+  for i in range(len(train_ds)):
+    (X, Y) = train_ds[i]    # (predictors, target)
+    with T.no_grad():
+      oupt = net(X)         # computed price
+    
+    delta = oupt.item() - Y.item()
+    original_e_delta_train.append(delta)  
+  
+  original_e_delta_test = []
+  for i in range(len(test_ds)):
+    (X, Y) = train_ds[i]    # (predictors, target)
+    with T.no_grad():
+      oupt = net(X)         # computed price
+    
+    delta = oupt.item() - Y.item()
+    original_e_delta_test.append(delta)  
 
   # 3. train model
   max_epochs = 500
@@ -374,17 +394,19 @@ def main():
   print("Accuracy (within 0.10) on train data = %0.4f" % \
     acc_train)
 
-  e_delta = []  
+  e_delta_train = []  
   for i in range(len(train_ds)):
     (X, Y) = train_ds[i]    # (predictors, target)
     with T.no_grad():
       oupt = net(X)         # computed price
     
     delta = oupt.item() - Y.item()
-    e_delta.append(delta)
+    e_delta_train.append(delta)
     
   plt.figure(figsize=(6.5,6.5)) # width=6.5inches, height=6.5inches
-  plt.plot(e_delta)
+  plt.plot(original_e_delta_train, label="Neural Network")
+  plt.plot(e_delta_train, label="Trained Model")
+  plt.legend(loc="best")
   plt.title("Error in the Training Data")
   plt.xlabel('Data')
   plt.ylabel('Error')  
@@ -394,17 +416,19 @@ def main():
   print("Accuracy (within 0.10) on test data  = %0.4f" % \
     acc_test)
       
-  e_delta = []
+  e_delta_test = []
   for i in range(len(test_ds)):
     (X, Y) = train_ds[i]    # (predictors, target)
     with T.no_grad():
       oupt = net(X)         # computed price
     
     delta = oupt.item() - Y.item()
-    e_delta.append(delta)
+    e_delta_test.append(delta)
     
   plt.figure(figsize=(6.5,6.5)) # width=6.5inches, height=6.5inches
-  plt.plot(e_delta)
+  plt.plot(original_e_delta_test, label="Neural Network")
+  plt.plot(e_delta_test, label="Trained Model")
+  plt.legend(loc="best")
   plt.title("Error in the Testing Data")
   plt.xlabel('Data')
   plt.ylabel('Error')  

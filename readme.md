@@ -1,1 +1,1 @@
-The python project explores Python and Artificial Neural Network.
+The repo explores Python and Artificial Neural Network.
